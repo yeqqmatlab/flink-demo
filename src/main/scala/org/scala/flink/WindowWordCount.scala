@@ -13,7 +13,9 @@ object WindowWordCount {
       //.filter(_.isEmpty)
       .map((_,1))
       .keyBy(0)
-      .timeWindow(Time.seconds(3))
+      // 10秒一个滑动窗口
+      .timeWindow(Time.seconds(6),Time.seconds(2))
+      //.timeWindow(Time.seconds(10))
       .sum(1)
 
     counts.print()

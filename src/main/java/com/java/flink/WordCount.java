@@ -17,11 +17,11 @@ public class WordCount {
         StreamExecutionEnvironment env = StreamExecutionEnvironment.getExecutionEnvironment();
 
         //连接socket获取输入的数据
-        DataStreamSource<String> text = env.socketTextStream("192.168.1.248", 9999, "\n");
+        DataStreamSource<String> text = env.socketTextStream("192.168.1.248", 9999);
 
         //计算数据
         DataStream<WordWithCount> windowCount = text.flatMap((FlatMapFunction<String, WordWithCount>) (value, out) -> {
-            String[] splits = value.split("\\s");
+            String[] splits = value.split(" ");
             for (String word:splits) {
                 out.collect(new WordWithCount(word,1L));
             }

@@ -1,30 +1,22 @@
 package org.scala.flink
 
-
 import org.apache.flink.api.scala.ExecutionEnvironment
 import org.apache.flink.streaming.api.scala._
 
-object BatchWordCount {
+object BatchWordCount2 {
   def main(args: Array[String]): Unit = {
 
     val env = ExecutionEnvironment.getExecutionEnvironment
 
-    val text = env.fromElements(
-      "Who's there?",
-      "I think I hear them. Stand, ho! Who's there?")
-    val counts = text.flatMap(_.toLowerCase.split(" "))
-      .filter(_.isEmpty)
+    val inputData = "E:\\git_workspace\\flink-demo\\src\\main\\resources\\words.txt"
+
+    val text = env.readTextFile(inputData)
+    val counts = text.flatMap(_.split(" "))
       .map((_, 1))
       .groupBy(0)
       .sum(1)
 
-
-
     counts.print()
-
-    println("aaaa")
-
-
 
   }
 }
